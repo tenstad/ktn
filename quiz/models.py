@@ -2,12 +2,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
-
 class Section(models.Model):
     number = models.IntegerField()
 
     def __str__(self):
-        return self.number
+        return str(self.number)
 
 
 class Subsection(models.Model):
@@ -15,7 +14,7 @@ class Subsection(models.Model):
     number = models.IntegerField()
 
     def __str__(self):
-        return '%r.%r' % (self.section, self.number)
+        return '%s.%s' % (self.section, str(self.number))
 
 
 class Question(models.Model):
@@ -25,11 +24,17 @@ class Question(models.Model):
     true = models.BooleanField(verbose_name='Answer')
 
     def __str__(self):
-        return self.question if len(self.question) <= 30 else '%s...' % self.question[27:]
+        return self.question
+
+    def qid(self):
+        return '%s.%s' % (self.subsection, self.number)
 
 
 class Answer(models.Model):
     user = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     timestamp = models.DateTimeField(default=timezone.now)
-    correct = models.BooleanField()
+    correct = models.BooleanField(verbose_name='Answered correct')
+
+    def __str__(self):
+        return '%s %r %s' % (self.user, self.correct, self.question)
