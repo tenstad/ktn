@@ -1,0 +1,28 @@
+.column {
+  max-width: 450px;
+  margin-top: 30px;
+  width: 90% !important;
+}
+
+form {
+  text-align: left;
+}
+
+form p {
+  display: inline-block;
+  color: #aaa;
+}
+
+form a {
+  margin-left: 5px;
+  opacity: 1;
+}
+
+form a:hover {
+  opacity: 0.8;
+}
+
+form .red.message p {
+  color: #db2828;
+}
+

@@ -1,0 +1,68 @@
+{% extends 'ktn/base.html' %}
+{% load ktn_settings %}
+{% load staticfiles %}
+
+{% block title %}Login{% endblock title %}
+{% block tab %}login{% endblock tab %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "account/css/login.css" %}">
+{% endblock head %}
+
+{% block content %}
+
+  <div class="ui middle aligned center aligned grid">
+    <div class="column">
+      <h2 class="ui header {{ 'ACCENT_COLOR_NAME'|setting }}">
+        Login
+      </h2>
+      <form class="ui large form" action="" method="post">
+
+        {% csrf_token %}
+
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input id="{{ form.username.id_for_label }}"
+                   name="username"
+                   placeholder="username"
+                   type="text"
+                   maxlength="{{ form.fields.username.max_length }}"
+                   value="{{ form.username.value|default:'' }}">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input id="{{ form.password.id_for_label }}"
+                   name="password"
+                   placeholder="password"
+                   type="password"
+                   maxlength="{{ form.fields.password.max_length }}">
+          </div>
+        </div>
+
+        {% if form.password.errors %}
+          <div class="ui tiny red message">
+            <p>{{ form.password.errors.0 }}</p>
+          </div>
+        {% endif %}
+
+        <p>Dont have an account?</p>
+        <a href="/account/register/">Sign up now</a>
+
+        <div class="ui fluid large submit button {{ 'ACCENT_COLOR_NAME'|setting }}">Login</div>
+        <script src="{% static "account/js/login.js" %}"></script>
+
+      </form>
+    </div>
+  </div>
+
+  <style>
+  form a {
+    color: {{ 'ACCENT_COLOR_CODE'|setting }};
+  }
+  </style>
+
+{% endblock content %}
