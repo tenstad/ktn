@@ -1,0 +1,9 @@
+{% extends 'ktn/base.html' %}
+{% load ktn_settings %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="ui container text">
+    <h2 class="ui header item {{ "ACCENT_COLOR_NAME"|setting }}">Welcome</h2>
+  </div>
+{% endblock content %}

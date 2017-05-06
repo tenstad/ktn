@@ -1,0 +1,24 @@
+<div class="ui small modal delete">
+  <div class="header">
+    Are you sure?
+  </div>
+  <div class="content">
+    <p>It will be permanently deleted!</p>
+  </div>
+  <div class="actions">
+    <div class="ui button cancel">
+      Cancel
+    </div>
+    <a href="/" class="ui icon red button delete approve">
+      Delete
+      <i class="trash icon"></i>
+    </a>
+  </div>
+</div>
+
+<script>
+  $(".delete.openmodal").click(function() {
+    $('.delete.modal').modal('show');
+    $(".delete.modal .delete.button").attr("href", $(this).attr("url"));
+  });
+</script>

@@ -1,0 +1,65 @@
+{% load staticfiles %}
+{% load ktn_settings %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}
+        KTN
+      {% endblock title %}
+    </title>
+
+    <link rel="shortcut icon" type="image/png" href="{% static "ktn/img/favicon.ico" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "ktn/css/semantic.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "ktn/css/alertify.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "ktn/css/alertify.semantic.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "ktn/css/style.css" %}">
+    <!--link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"-->
+
+    <style>
+      label {
+        color: {{ 'ACCENT_COLOR_NAME'|setting }} !important;,
+      }
+    </style>
+
+    <script src="{% static "ktn/js/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "ktn/js/semantic.min.js" %}"></script>
+    <script src="{% static "ktn/js/alertify.min.js" %}"></script>
+
+    {% block head %}
+    {% endblock head %}
+  </head>
+
+  <body>
+    {% block header %}
+      {% include 'ktn/header.html' %}
+    {% endblock header %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block footer %}
+    {% endblock footer %}
+  </body>
+
+  {% if messages %}
+    <script>
+      $(function() {
+        {% for message in messages %}
+          alertify.message("{{ message }}");
+        {% endfor %}
+      });
+    </script>
+  {% endif %}
+
+  {% include 'ktn/delete.html' %}
+
+  <script>
+    $('.menu .{% block tab %}home{% endblock tab %}_tab').addClass('active');
+  </script>
+
+</html>
