@@ -1,0 +1,15 @@
+{% extends 'ktn/base.html' %}
+{% load ktn_settings %}
+{% load staticfiles %}
+
+{% block tab %}quiz{% endblock tab %}
+
+{% block content %}
+  <div class="ui container text">
+    <h2 class="ui header item {{ "ACCENT_COLOR_NAME"|setting }}">{{ question.question }}</h2>
+    <a class="ui green button">True</a>
+    <a class="ui red button">False</a>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Previous</a>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Next</a>
+  </div>
+{% endblock content %}
