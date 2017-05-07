@@ -1,0 +1,22 @@
+.icon {
+    margin: -4px !important;
+}
+
+.section {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px;
+}
+
+.subsection .header {
+    display: inline-block;
+}
+
+.subsection .row {
+    display: inline-block;
+}
+
+.overview {
+    margin-top: 50px;
+    text-align: center;
+}

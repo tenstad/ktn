@@ -15,6 +15,8 @@ class Quiz(View):
             'subsections': [a for a in range(1, 6)],
             'questions': [a for a in range(1, 11)],
         }
+        if request.user.is_authenticated:
+            context['list'] = [([([(1 if Answer.objects.filter(question=question, user=request.user, correct=True).count() else 0 if not Answer.objects.filter(question=question, user=request.user).count() else 2, question.url()) for question in subsection.question_set.all()], subsection.number) for subsection in section.subsection_set.all()], section.number) for section in Section.objects.all()]
         return render(request, 'quiz/quiz.html', context)
 
     def post(self, request, *args, **kwargs):

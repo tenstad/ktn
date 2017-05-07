@@ -5,6 +5,10 @@
 {% block tab %}quiz{% endblock tab %}
 {% block title %}Quiz{% endblock title %}
 
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "quiz/css/quiz.css" %}">
+{% endblock head %}
+
 {% block content %}
   <div class="ui container text">
     <h2 class="ui header item {{ "ACCENT_COLOR_NAME"|setting }}">Quiz</h2>
@@ -60,6 +64,33 @@
     <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/last">Siste</a>
     <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a>
     <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/continue">Fortsett</a>
+
+    <div class="overview">
+
+      {% for a in list %}
+        <div class="section">
+          <h2 class="ui {{ 'ACCENT_COLOR_NAME'|setting }} header">{{ a.1 }}</h2>
+          {% for b in a.0 %}
+            <div class="subsection">
+              <h4 class="ui {{ 'ACCENT_COLOR_NAME'|setting }} header">{{ b.1 }}</h4>
+              <div class="row">
+                {% for c in b.0 %}
+                  <a href="{{ c.1 }}">
+                  {% if c.0 is 0 %}
+                    <i class="ui yellow radio icon"></i>
+                  {% elif c.0 is 1 %}
+                    <i class="ui green check circle icon"></i>
+                  {% else %}
+                    <i class="ui red remove circle icon"></i>
+                  {% endif %}
+                {% endfor %}
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 
   <script src="{% static "quiz/js/quiz.js" %}"></script>
