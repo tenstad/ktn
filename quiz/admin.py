@@ -17,6 +17,7 @@ class AnswerAdmin(admin.ModelAdmin):
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('qid', 'true', 'question')
+    search_fields = ('question',)
 
 
 admin.site.register(Answer, AnswerAdmin)
