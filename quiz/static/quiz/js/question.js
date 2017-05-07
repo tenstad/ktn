@@ -14,10 +14,15 @@ $(function () {
                 success: function (data) {
                     if (data['correct']) {
                         button.addClass('green');
-                        $('.results').append('<i class="ui green check circle icon"></i>');
+                        if (!$('.check.circle').length) {
+                            $('.results .icon').remove();
+                            $('.results').append('<i class="ui green check circle icon"></i>');
+                        }
                     } else {
                         button.addClass('red');
-                        $('.results').append('<i class="ui red remove circle icon"></i>');
+                        if (!$('.results .icon').length) {
+                            $('.results').append('<i class="ui red remove circle icon"></i>');
+                        }
                     }
                 }
             });

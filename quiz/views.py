@@ -82,15 +82,17 @@ class Continue(View):
 class Question(View):
     def get(self, request, section_num, subsection_num, question_num, *args, **kwargs):
         question = QuestionModel.get(section_num, subsection_num, question_num)
-        if request.user.is_authenticated:
-            results = [a.correct for a in
-                       Answer.objects.filter(question=question, user=request.user).order_by('timestamp')]
-        else:
-            results = []
         context = {
             'question': question,
-            'results': results,
         }
+        if request.user.is_authenticated:
+            answers = Answer.objects.filter(question=question, user=request.user)
+            if answers.exists():
+                if answers.filter(correct=True).exists():
+                    context.update({'result': 1})
+                else:
+                    context.update({'result': 2})
+
         return render(request, 'quiz/question.html', context)
 
     def post(self, request, section_num, subsection_num, question_num, *args, **kwargs):

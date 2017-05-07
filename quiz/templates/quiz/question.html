@@ -14,13 +14,11 @@
     <div class="info">
       <h2 class="ui header {{ "ACCENT_COLOR_NAME"|setting }}">{{ question.qid }}</h2>
       <div class="results">
-        {% for result in results %}
-          {% if result %}
-            <i class="ui green check circle icon"></i>
-          {% else %}
-            <i class="ui red remove circle icon"></i>
-          {% endif %}
-        {% endfor %}
+        {% if result == 1 %}
+          <i class="ui green check circle icon"></i>
+        {% elif result == 2%}
+          <i class="ui red remove circle icon"></i>
+        {% endif %}
       </div>
       <p>{{ question.question }}</p>
     </div>
