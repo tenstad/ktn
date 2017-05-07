@@ -2,10 +2,19 @@
 {% load ktn_settings %}
 {% load staticfiles %}
 
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "ktn/css/index.css" %}">
+{% endblock head %}
+
 {% block content %}
   <div class="ui container text">
     <h2 class="ui header item {{ "ACCENT_COLOR_NAME"|setting }}">Velkommen</h2>
     <p>Dette er en samling av alle true/false eksamen-spørsmål i TTM4100</p>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/">Start!</a>
+    <p><a class="item login_tab" href="/account/login">Logg på</a> for å få tilgang til den fulle opplevelsen.</p>
+    <ul>
+      <li>Automatisk fortsette der du slapp</li>
+      <li>Full oversikt over hva du har besvart og hvordan du ligger an</li>
+    </ul>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} start button" href="/quiz/">Start!</a>
   </div>
 {% endblock content %}
