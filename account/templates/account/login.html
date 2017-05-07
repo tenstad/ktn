@@ -14,7 +14,7 @@
   <div class="ui middle aligned center aligned grid">
     <div class="column">
       <h2 class="ui header {{ 'ACCENT_COLOR_NAME'|setting }}">
-        Login
+        Logg inn
       </h2>
       <form class="ui large form" action="" method="post">
 
@@ -25,7 +25,7 @@
             <i class="user icon"></i>
             <input id="{{ form.username.id_for_label }}"
                    name="username"
-                   placeholder="username"
+                   placeholder="brukernavn"
                    type="text"
                    maxlength="{{ form.fields.username.max_length }}"
                    value="{{ form.username.value|default:'' }}">
@@ -37,7 +37,7 @@
             <i class="lock icon"></i>
             <input id="{{ form.password.id_for_label }}"
                    name="password"
-                   placeholder="password"
+                   placeholder="passord"
                    type="password"
                    maxlength="{{ form.fields.password.max_length }}">
           </div>
@@ -49,10 +49,10 @@
           </div>
         {% endif %}
 
-        <p>Dont have an account?</p>
-        <a href="/account/register/">Sign up now</a>
+        <p>Har du ikke bruker?</p>
+        <a href="/account/register/">Registrer nå</a>
 
-        <div class="ui fluid large submit button {{ 'ACCENT_COLOR_NAME'|setting }}">Login</div>
+        <div class="ui fluid large submit button {{ 'ACCENT_COLOR_NAME'|setting }}">Logg inn</div>
         <script src="{% static "account/js/login.js" %}"></script>
 
       </form>

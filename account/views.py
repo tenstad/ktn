@@ -19,7 +19,6 @@ class Login(FormView):
 
     def form_valid(self, form):
         login(self.request, auth(username=form.cleaned_data['username'], password=form.cleaned_data['password']))
-        messages.info(self.request, 'Login successful')
         return try_next(self.request, self.success_url)
 
 
@@ -30,7 +29,6 @@ class Register(FormView):
 
     def form_valid(self, form):
         login(self.request, form.save(self.request))
-        messages.info(self.request, 'Register successful')
         return try_next(self.request, self.success_url)
 
 
@@ -40,7 +38,6 @@ class Logout(View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             auth_logout(request)
-            messages.info(request, 'Logout successful')
 
         return HttpResponseRedirect(self.success_url)
 

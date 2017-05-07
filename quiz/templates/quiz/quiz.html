@@ -16,7 +16,7 @@
           <div class="ui selection subject dropdown search scrolling field">
             <input class="dummy" name="section" type="hidden">
             <i class="dropdown icon"></i>
-            <div class="default text">Section</div>
+            <div class="default text">År</div>
             <div class="menu">
               {% for section in sections %}
                 <div class="item">{{ section }}</div>
@@ -28,12 +28,12 @@
           <div class="ui selection subject dropdown search scrolling field">
             <input class="dummy" name="subsection" type="hidden">
             <i class="dropdown icon"></i>
-            <div class="default text">Subsection</div>
+            <div class="default text">Oppgave</div>
             <div class="menu">
               {% for subsection in subsections %}
                 <div class="item">{{ subsection }}</div>
               {% endfor %}
-              <div class="item" data-value="6">6 (2008 only)</div>
+              <div class="item" data-value="6">6 (bare 2008)</div>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
           <div class="ui selection subject dropdown search scrolling field">
             <input class="dummy" name="question" type="hidden">
             <i class="dropdown icon"></i>
-            <div class="default text">Question</div>
+            <div class="default text">Spørsmål</div>
             <div class="menu">
               {% for question in questions %}
                 <div class="item">{{ question }}</div>
@@ -50,16 +50,16 @@
           </div>
         </div>
         <div class="field">
-          <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button submit">Go</a>
+          <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button submit">Gå</a>
         </div>
       </div>
     </form>
 
 
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/first">First</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/last">Last</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Random</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/continue">Continue</a>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/first">Første</a>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/last">Siste</a>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a>
+    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/continue">Fortsett</a>
   </div>
 
   <script src="{% static "quiz/js/quiz.js" %}"></script>

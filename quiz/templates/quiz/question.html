@@ -27,13 +27,13 @@
     <div class="actions">
       <a class="ui button answer">True</a>
       <a class="ui button answer">False</a>
-      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Previous</a>
-      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Next</a>
-      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Random</a>
+      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Forrige</a>
+      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Neste</a>
+      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a>
     </div>
     {% if not user.is_authenticated %}
         <div class="loginalert">
-          <p class="ui red header"><i class="ui red warning sign icon"></i> Not logged in</p>
+          <p class="ui red header"><i class="ui red warning sign icon"></i> Ikke logget inn</p>
         </div>
     {% endif %}
   </div>

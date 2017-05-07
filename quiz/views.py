@@ -38,7 +38,7 @@ class Quiz(View):
 
             return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section.number, subsection.number, question.number))
         except (ValueError, Section.DoesNotExist, Subsection.DoesNotExist, QuestionModel.DoesNotExist):
-            messages.error(request, 'Question does not exist')
+            messages.error(request, 'Spørsmålet eksisterer ikke')
             return HttpResponseRedirect('/quiz/')
 
 
