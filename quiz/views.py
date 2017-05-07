@@ -1,13 +1,52 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.views import View
 
-from .models import Section, Answer, Question as QuestionModel
+from .models import Section, Subsection, Answer, Question as QuestionModel
 
 
 class Quiz(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'quiz/quiz.html')
+        context = {
+            'sections': [section.number for section in Section.objects.all()],
+            'subsections': [a for a in range(1,6)],
+            'questions': [a for a in range(1,11)],
+        }
+        return render(request, 'quiz/quiz.html', context)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            section = request.POST['section']
+            subsection = request.POST['subsection']
+            question = request.POST['question']
+
+            if not section:
+                section = Section.objects.first()
+            else:
+                section = Section.objects.get(number=section)
+            if not subsection:
+                subsection = section.subsection_set.first()
+            else:
+                subsection = Subsection.objects.get(section=section, number=subsection)
+            if not question:
+                question = subsection.question_set.first()
+            else:
+                question = QuestionModel.objects.get(subsection=subsection, number=question)
+
+            return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section.number, subsection.number, question.number))
+        except (ValueError, Section.DoesNotExist, Subsection.DoesNotExist, QuestionModel.DoesNotExist):
+            messages.error(request, 'Question does not exist')
+            return render(request, 'quiz/quiz.html')
+
+class First(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(Section.objects.first().subsection_set.first().question_set.first().url())
+
+
+class Last(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(Section.objects.last().subsection_set.last().question_set.last().url())
 
 
 class Continue(View):
@@ -22,7 +61,8 @@ class Question(View):
     def get(self, request, section_num, subsection_num, question_num, *args, **kwargs):
         question = QuestionModel.get(section_num, subsection_num, question_num)
         if request.user.is_authenticated:
-            results = [a.correct for a in Answer.objects.filter(question=question, user=request.user).order_by('timestamp')]
+            results = [a.correct for a in
+                       Answer.objects.filter(question=question, user=request.user).order_by('timestamp')]
         else:
             results = []
         context = {
