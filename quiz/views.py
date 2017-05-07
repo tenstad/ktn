@@ -1,3 +1,5 @@
+import random
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
@@ -10,8 +12,8 @@ class Quiz(View):
     def get(self, request, *args, **kwargs):
         context = {
             'sections': [section.number for section in Section.objects.all()],
-            'subsections': [a for a in range(1,6)],
-            'questions': [a for a in range(1,11)],
+            'subsections': [a for a in range(1, 6)],
+            'questions': [a for a in range(1, 11)],
         }
         return render(request, 'quiz/quiz.html', context)
 
@@ -39,6 +41,7 @@ class Quiz(View):
             messages.error(request, 'Question does not exist')
             return HttpResponseRedirect('/quiz/')
 
+
 class First(View):
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(Section.objects.first().subsection_set.first().question_set.first().url())
@@ -47,6 +50,13 @@ class First(View):
 class Last(View):
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(Section.objects.last().subsection_set.last().question_set.last().url())
+
+
+class Random(View):
+    def get(self, request, *args, **kwargs):
+        question_count = QuestionModel.objects.count()
+        question = QuestionModel.objects.all()[random.randint(0, question_count-1)]
+        return HttpResponseRedirect(question.url())
 
 
 class Continue(View):
