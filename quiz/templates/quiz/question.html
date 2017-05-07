@@ -29,6 +29,11 @@
       <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Previous</a>
       <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Next</a>
     </div>
+    {% if not user.is_authenticated %}
+        <div class="loginalert">
+          <p class="ui red header"><i class="ui red warning sign icon"></i> Not logged in</p>
+        </div>
+    {% endif %}
   </div>
 
   <script>

@@ -20,3 +20,14 @@
 .results .icon {
     margin: 0;
 }
+
+.container {
+    position: relative;
+}
+
+.loginalert {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1.5%;
+}
