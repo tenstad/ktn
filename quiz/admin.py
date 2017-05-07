@@ -4,7 +4,8 @@ from .models import Section, Subsection, Question, Answer
 
 
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'qid', 'question', 'correct_answer', 'correct', 'timestamp')
+    list_display = ('user', 'timestamp', 'correct', 'correct_answer', 'qid', 'question')
+    search_fields = ('question__question', 'user__username')
 
     def qid(self, object):
         return object.question.qid()
