@@ -10,7 +10,7 @@
 
 .info {
     padding: 1.5%;
-    margin-bottom: 40px;
+    min-height: 150px;
 }
 
 .header, .results {
