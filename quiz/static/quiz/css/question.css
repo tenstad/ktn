@@ -1,0 +1,22 @@
+.button {
+    width: 47.5%;
+    display: inline-block !important;
+    margin: 1% 0.7% !important;
+}
+
+.actions {
+    text-align: center;
+}
+
+.info {
+    padding: 1.5%;
+    margin-bottom: 40px;
+}
+
+.header, .results {
+    display: inline-block;
+}
+
+.results .icon {
+    margin: 0;
+}

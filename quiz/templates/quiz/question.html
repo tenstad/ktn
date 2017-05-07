@@ -4,12 +4,39 @@
 
 {% block tab %}quiz{% endblock tab %}
 
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "quiz/css/question.css" %}">
+{% endblock head %}
+
 {% block content %}
   <div class="ui container text">
-    <h2 class="ui header item {{ "ACCENT_COLOR_NAME"|setting }}">{{ question.question }}</h2>
-    <a class="ui green button">True</a>
-    <a class="ui red button">False</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Previous</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Next</a>
+    <div class="info">
+      <h2 class="ui header {{ "ACCENT_COLOR_NAME"|setting }}">{{ question.qid }}</h2>
+      <div class="results">
+        {% for result in results %}
+          {% if result %}
+            <i class="ui green check circle icon"></i>
+          {% else %}
+            <i class="ui red remove circle icon"></i>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <p>{{ question.question }}</p>
+    </div>
+    <div class="actions">
+      <a class="ui button answer">True</a>
+      <a class="ui button answer">False</a>
+      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Previous</a>
+      <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Next</a>
+    </div>
   </div>
+
+  <script>
+      $.ajaxSetup({
+          beforeSend: function (xhr, settings) {
+              xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+          }
+      });
+  </script>
+  <script src="{% static "quiz/js/question.js" %}"></script>
 {% endblock content %}
