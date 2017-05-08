@@ -74,7 +74,7 @@ class Random(View):
 class Continue(View):
     def get(self, request, *args, **kwargs):
         try:
-            return HttpResponseRedirect(Answer.objects.filter(user=request.user).last().question.next().url())
+            return HttpResponseRedirect(Answer.objects.filter(user=request.user).last().question.url())
         except (AttributeError, TypeError):
             return HttpResponseRedirect(Section.objects.first().subsection_set.first().question_set.first().url())
 
