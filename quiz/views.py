@@ -10,22 +10,38 @@ from .models import Section, Subsection, Answer, Question as QuestionModel, Note
 
 class Quiz(View):
     def get(self, request, *args, **kwargs):
+        user = request.user
+
         context = {
-            'sections': [section.number for section in Section.objects.all()],
+            'sections': Section.objects.values_list('number', flat=True),
             'subsections': [a for a in range(1, 6)],
             'questions': [a for a in range(1, 11)],
         }
 
         def getnum(user_answers, question, user):
-            answers = user_answers.filter(question=question)
-            if answers.count() == 0: return 0
-            if answers.filter(correct=True).exists(): return 1
+            answers = [a for a in user_answers if a[0] == question]
+            if len(answers) == 0: return 0
+            if len([a for a in answers if a[1] == True]): return 1
             return 2
 
-        if request.user.is_authenticated:
-            user = request.user
-            user_answers = Answer.objects.filter(user=user)
-            context['list'] = [([([(getnum(user_answers, question, user), question.url()) for question in subsection.question_set.all()], subsection.number) for subsection in section.subsection_set.all()], section.number) for section in Section.objects.all()]
+        if user.is_authenticated:
+            user_answers = Answer.objects.filter(user=user).values_list('question', 'correct')
+            sections = Section.objects.values_list('number', flat=True)
+            subsections = Subsection.objects.values_list('number', 'section__number')
+            questions = QuestionModel.objects.values_list('id', 'number', 'subsection__number', 'subsection__section__number')
+
+            total_list = []
+
+            for section in sections:
+                section_list = ([], section)
+                for subsection in [a for a in subsections if a[1] == section]:
+                    subsection_list = ([], subsection[0])
+                    for question in [a for a in questions if a[2] == subsection[0] and a[3] == section]:
+                        subsection_list[0].append((getnum(user_answers, question[0], user), '/quiz/%s/%s/%s/' % (section, subsection[0], question[1],)))
+                    section_list[0].append(subsection_list)
+                total_list.append(section_list)
+
+            context['list'] = total_list
 
         return render(request, 'quiz/quiz.html', context)
 
