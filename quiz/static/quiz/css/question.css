@@ -4,7 +4,7 @@
     margin: 1% 0.7% !important;
 }
 
-.actions {
+.question.actions {
     text-align: center;
 }
 
@@ -30,4 +30,27 @@
     top: 0;
     right: 0;
     padding: 1.5%;
+}
+
+.actionbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1.5%;
+}
+
+.actionbar *:hover {
+    cursor: pointer;
+}
+
+.notesection {
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.notesection form {
+    padding: 1.5%;
+    text-align: left;
 }

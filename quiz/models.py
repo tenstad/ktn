@@ -96,3 +96,18 @@ class Answer(models.Model):
 
     def __str__(self):
         return '%s %r %s' % (self.user, self.correct, self.question)
+
+
+class Note(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+    note = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.note
+
+    class Meta:
+        ordering = ['-question']
+
+    def lines(self):
+        return self.note.split('\n')

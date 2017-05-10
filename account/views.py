@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.views.generic.base import ContextMixin
 from django.views.generic.edit import FormView
 
+from quiz.models import Note
 from .forms import LoginForm, RegisterForm
 from ktn.views import try_next
 
@@ -46,4 +47,7 @@ class Account(LoginRequiredMixin, ContextMixin, View):
     login_url = '/account/login/'
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'account/account.html')
+        context = {
+            'notes': sorted(Note.objects.filter(user=request.user), key=lambda a: a.question.qid())
+        }
+        return render(request, 'account/account.html', context)

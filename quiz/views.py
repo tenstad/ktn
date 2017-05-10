@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.views import View
 
-from .models import Section, Subsection, Answer, Question as QuestionModel
+from .models import Section, Subsection, Answer, Question as QuestionModel, Note
 
 
 class Quiz(View):
@@ -92,14 +92,39 @@ class Question(View):
                     context.update({'result': 1})
                 else:
                     context.update({'result': 2})
+            try:
+                context['note'] = Note.objects.get(user=request.user, question=question).note
+            except Note.DoesNotExist:
+                pass
 
         return render(request, 'quiz/question.html', context)
 
     def post(self, request, section_num, subsection_num, question_num, *args, **kwargs):
         question = QuestionModel.get(section_num, subsection_num, question_num)
-        correct = eval(request.POST['answer']) == question.true
-        if request.user.is_authenticated:
-            Answer.objects.create(question=question, user=request.user, correct=correct)
-        return JsonResponse({
-            'correct': correct,
-        })
+        if 'answer' in request.POST:
+            correct = eval(request.POST['answer']) == question.true
+            if request.user.is_authenticated:
+                Answer.objects.create(question=question, user=request.user, correct=correct)
+            return JsonResponse({
+                'correct': correct,
+            })
+        elif 'note' in request.POST:
+            if request.POST['note']:
+                try:
+                    note = Note.objects.get(user=request.user, question=question)
+                except Note.DoesNotExist:
+                    note = Note.objects.create(user=request.user, question=question)
+                note.note = request.POST['note']
+                note.save()
+            else:
+                return delete(request, section_num, subsection_num, question_num)
+
+        return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section_num, subsection_num, question_num))
+
+def delete(request, section_num, subsection_num, question_num):
+    question = QuestionModel.get(section_num, subsection_num, question_num)
+    try:
+        Note.objects.get(user=request.user, question=question).delete()
+    except Note.DoesNotExist:
+        pass
+    return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section_num, subsection_num, question_num))

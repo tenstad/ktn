@@ -22,7 +22,19 @@
       </div>
       <p>{{ question.question }}</p>
     </div>
-    <div class="actions">
+    <div class="notesection">
+      <form class="ui form" action="" method="post">
+        {% csrf_token %}
+        <div class="field">
+          <label>Notat</label>
+          <textarea rows="3" name="note" maxlength="500">{{ note }}</textarea>
+        </div>
+      </form>
+      <button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} notesave button">Lagre</button>
+      <button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} noteabort button">Avbryt</button>
+      <button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} delete openmodal button" url="deletenote">Slett</button>
+    </div>
+    <div class="question actions">
       <a class="ui button answer">True</a>
       <a class="ui button answer">False</a>
       <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Forrige</a>
@@ -30,9 +42,13 @@
       <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a>
     </div>
     {% if not user.is_authenticated %}
-        <div class="loginalert">
-          <p class="ui red header"><i class="ui red warning sign icon"></i> Ikke logget inn</p>
-        </div>
+      <div class="loginalert">
+        <p class="ui red header"><i class="ui red warning sign icon"></i> Ikke logget inn</p>
+      </div>
+    {% else %}
+      <div class="actionbar">
+        <p class="note toggle" data-tooltip="Personlig notat" data-position="top center"><i class="ui blue sticky note {% if not note %}outline{% endif %} icon"></i></p>
+      </div>
     {% endif %}
   </div>
 
@@ -42,6 +58,7 @@
               xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
           }
       });
+      original_note = `{{ note }}`;
   </script>
   <script src="{% static "quiz/js/question.js" %}"></script>
 {% endblock content %}
