@@ -30,14 +30,21 @@ class Quiz(View):
             subsections = Subsection.objects.values_list('number', 'section__number')
             questions = QuestionModel.objects.values_list('id', 'number', 'subsection__number', 'subsection__section__number')
 
-            total_list = []
+            tree = {}
+            for section in sections:
+                tree[section] = {}
+            for subsection in subsections:
+                tree[subsection[1]][subsection[0]] = []
+            for question in questions:
+                tree[question[3]][question[2]].append(question)
 
+            total_list = []
             for section in sections:
                 section_list = ([], section)
-                for subsection in [a for a in subsections if a[1] == section]:
-                    subsection_list = ([], subsection[0])
-                    for question in [a for a in questions if a[2] == subsection[0] and a[3] == section]:
-                        subsection_list[0].append((getnum(user_answers, question[0], user), '/quiz/%s/%s/%s/' % (section, subsection[0], question[1],)))
+                for subsection in tree[section]:
+                    subsection_list = ([], subsection)
+                    for question in tree[section][subsection]:
+                        subsection_list[0].append((getnum(user_answers, question[0], user), '/quiz/%s/%s/%s/' % (section, subsection, question[1])))
                     section_list[0].append(subsection_list)
                 total_list.append(section_list)
 
