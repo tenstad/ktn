@@ -16,6 +16,10 @@
     padding: 0;
 }
 
+.tri.button {
+    width: calc(33.33% - 6.666px);
+}
+
 .question.actions {
     text-align: center;
 }

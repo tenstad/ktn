@@ -13,57 +13,63 @@
   <div class="ui container text">
     <h2 class="ui header item {{ "ACCENT_COLOR_NAME"|setting }}">Quiz</h2>
 
-    <form class="ui form" method="POST" target="">
-      {% csrf_token %}
-      <div class="fields">
-        <div class="field">
-          <div class="ui selection subject dropdown search scrolling field">
-            <input class="dummy" name="section" type="hidden">
-            <i class="dropdown icon"></i>
-            <div class="default text">År</div>
-            <div class="menu">
-              {% for section in sections %}
-                <div class="item">{{ section }}</div>
-              {% endfor %}
+    <div class="textcenter">
+      <div id="quizselection">
+        <div class="selectform">
+          <form class="ui form" method="POST" target="">
+            {% csrf_token %}
+            <div class="fields">
+              <div class="field">
+                <div class="ui selection subject dropdown search scrolling field">
+                  <input class="dummy" name="section" type="hidden">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">År</div>
+                  <div class="menu">
+                    {% for section in sections %}
+                      <div class="item">{{ section }}</div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui selection subject dropdown search scrolling field">
+                  <input class="dummy" name="subsection" type="hidden">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Oppgave</div>
+                  <div class="menu">
+                    {% for subsection in subsections %}
+                      <div class="item">{{ subsection }}</div>
+                    {% endfor %}
+                    <div class="item" data-value="6">6 (bare 2008)</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui selection subject dropdown search scrolling field">
+                  <input class="dummy" name="question" type="hidden">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Spørsmål</div>
+                  <div class="menu">
+                    {% for question in questions %}
+                      <div class="item">{{ question }}</div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui selection subject dropdown search scrolling field">
-            <input class="dummy" name="subsection" type="hidden">
-            <i class="dropdown icon"></i>
-            <div class="default text">Oppgave</div>
-            <div class="menu">
-              {% for subsection in subsections %}
-                <div class="item">{{ subsection }}</div>
-              {% endfor %}
-              <div class="item" data-value="6">6 (bare 2008)</div>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui selection subject dropdown search scrolling field">
-            <input class="dummy" name="question" type="hidden">
-            <i class="dropdown icon"></i>
-            <div class="default text">Spørsmål</div>
-            <div class="menu">
-              {% for question in questions %}
-                <div class="item">{{ question }}</div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div class="field">
+
+          </form>
           <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button submit">Gå</a>
         </div>
+
+        <div class="jumptobuttons">
+          <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/first">Første</a><!--
+          --><div class="divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/last">Siste</a><!--
+          --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a><!--
+          --><div class="divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/continue">Fortsett</a>
+        </div>
       </div>
-    </form>
-
-
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/first">Første</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/last">Siste</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a>
-    <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/continue">Fortsett</a>
+    </div>
 
     <div class="overview">
 

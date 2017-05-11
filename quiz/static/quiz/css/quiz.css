@@ -20,3 +20,53 @@
     margin-top: 50px;
     text-align: center;
 }
+
+.fields {
+    margin: 0 !important;
+    margin-bottom: 5px !important;
+}
+
+.fields > .field {
+    padding: 0 !important;
+}
+
+.selection.dropdown, .field {
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
+
+.field {
+    margin-right: 2px !important;
+}
+
+.jumptobuttons .button {
+    width: calc(50% - 5px);
+    margin: 0 !important;
+    margin-top: 10px !important;
+}
+
+.divider {
+    display: inline-block;
+    width: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.submit.button {
+    width: 100%;
+    margin-bottom: 10px !important;
+}
+
+#quizselection {
+    display: inline-block;
+}
+
+.selectform, .jumptobuttons {
+    max-width: 300px;
+    display: inline-block;
+    padding: 0 10px;
+}
+
+.textcenter {
+    text-align: center;
+}

@@ -30,16 +30,16 @@
           <textarea rows="3" name="note" maxlength="500">{{ note }}</textarea>
         </div>
       </form>
-      <button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} notesave button">Lagre</button><!--
-      --><div class="divider"></div><button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} noteabort button">Avbryt</button>
-      <button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} delete openmodal button" url="deletenote">Slett</button>
+      <button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} notesave tri button">Lagre</button><!--
+      --><div class="divider"></div><button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} noteabort tri button">Avbryt</button><!--
+      --><div class="divider"></div><button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} delete openmodal tri button" url="deletenote">Slett</button>
     </div>
     <div class="question actions">
       <a class="ui button answer">True</a><!--
       --><div class="divider"></div><a class="ui button answer">False</a><!--
-      --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.previous.url }}">Forrige</a><!--
-      --><div class="divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="{{ question.next.url }}">Neste</a><!--
-      --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} button" href="/quiz/random">Tilfeldig</a>
+      --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} tri button" href="{{ question.previous.url }}">Forrige</a><!--
+      --><div class="tri divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} tri button" href="/quiz/random">Tilfeldig</a><!--
+      --><div class="divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} tri button" href="{{ question.next.url }}">Neste</a>
     </div>
     {% if not user.is_authenticated %}
       <div class="loginalert">
