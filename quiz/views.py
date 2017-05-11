@@ -28,7 +28,8 @@ class Quiz(View):
             user_answers = Answer.objects.filter(user=user).values_list('question', 'correct')
             sections = Section.objects.values_list('number', flat=True)
             subsections = Subsection.objects.values_list('number', 'section__number')
-            questions = QuestionModel.objects.values_list('id', 'number', 'subsection__number', 'subsection__section__number')
+            questions = QuestionModel.objects.values_list('id', 'number', 'subsection__number',
+                                                          'subsection__section__number')
 
             tree = {}
             for section in sections:
@@ -44,7 +45,8 @@ class Quiz(View):
                 for subsection in tree[section]:
                     subsection_list = ([], subsection)
                     for question in tree[section][subsection]:
-                        subsection_list[0].append((getnum(user_answers, question[0], user), '/quiz/%s/%s/%s/' % (section, subsection, question[1])))
+                        subsection_list[0].append((getnum(user_answers, question[0], user),
+                                                   '/quiz/%s/%s/%s/' % (section, subsection, question[1])))
                     section_list[0].append(subsection_list)
                 total_list.append(section_list)
 
@@ -77,6 +79,16 @@ class Quiz(View):
             return HttpResponseRedirect('/quiz/')
 
 
+class Notes(View):
+    login_url = '/account/login/'
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'notes': sorted(Note.objects.filter(user=request.user), key=lambda a: a.question.qid())
+        }
+        return render(request, 'quiz/notes.html', context)
+
+
 class First(View):
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(Section.objects.first().subsection_set.first().question_set.first().url())
@@ -90,7 +102,7 @@ class Last(View):
 class Random(View):
     def get(self, request, *args, **kwargs):
         question_count = QuestionModel.objects.count()
-        question = QuestionModel.objects.all()[random.randint(0, question_count-1)]
+        question = QuestionModel.objects.all()[random.randint(0, question_count - 1)]
         return HttpResponseRedirect(question.url())
 
 
@@ -143,6 +155,7 @@ class Question(View):
                 return delete(request, section_num, subsection_num, question_num)
 
         return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section_num, subsection_num, question_num))
+
 
 def delete(request, section_num, subsection_num, question_num):
     question = QuestionModel.get(section_num, subsection_num, question_num)

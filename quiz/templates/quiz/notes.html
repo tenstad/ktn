@@ -1,0 +1,31 @@
+{% extends 'ktn/base.html' %}
+{% load staticfiles %}
+{% load ktn_settings %}
+
+{% block title %}Notater{% endblock title %}
+{% block tab %}notes{% endblock tab %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "quiz/css/notes.css" %}">
+{% endblock head %}
+
+{% block content %}
+  <div class="ui text container">
+    <h2 class="ui blue header">Notater</h2>
+    {% if not notes %}
+      <p>Du har ingen notater. Trykk på <i class="ui blue sticky note outline icon"></i>ikonet til høyre for et spørsmål for å opprette et notat.</p>
+    {% else %}
+      {% for note in notes %}
+        <div class="note">
+          <a class="question"
+             href="{{ note.question.url }}">{{ note.question.qid }}&nbsp;&nbsp;&nbsp;{{ note.question.question|truncatechars:50 }}</a>
+          <p>
+            {% for line in note.lines %}
+              {{ line }}<br>
+            {% endfor %}
+          </p>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock content %}

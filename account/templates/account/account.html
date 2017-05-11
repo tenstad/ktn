@@ -12,20 +12,5 @@
 {% block content %}
   <div class="ui text container">
     <a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} logout button" href="/account/logout/">Logg ut</a>
-    <h2 class="ui blue header">Notater</h2>
-    {% if not notes %}
-      <p>Du har ingen notater.</p>
-    {% endif %}
-    {% for note in notes %}
-      <div class="note">
-        <a class="question"
-           href="{{ note.question.url }}">{{ note.question.qid }}&nbsp;&nbsp;&nbsp;{{ note.question.question|truncatechars:50 }}</a>
-        <p>
-          {% for line in note.lines %}
-            {{ line }}<br>
-          {% endfor %}
-        </p>
-      </div>
-    {% endfor %}
   </div>
 {% endblock content %}

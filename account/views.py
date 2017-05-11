@@ -47,7 +47,4 @@ class Account(LoginRequiredMixin, ContextMixin, View):
     login_url = '/account/login/'
 
     def get(self, request, *args, **kwargs):
-        context = {
-            'notes': sorted(Note.objects.filter(user=request.user), key=lambda a: a.question.qid())
-        }
-        return render(request, 'account/account.html', context)
+        return render(request, 'account/account.html')
