@@ -11,6 +11,7 @@ from .models import Section, Subsection, Answer, Question as QuestionModel, Note
 class Quiz(View):
     def get(self, request, *args, **kwargs):
         user = request.user
+        authenticated = user.is_authenticated
 
         context = {
             'sections': Section.objects.values_list('number', flat=True),
@@ -24,33 +25,35 @@ class Quiz(View):
             if len([a for a in answers if a[1] == True]): return 1
             return 2
 
-        if user.is_authenticated:
+        if authenticated:
             user_answers = Answer.objects.filter(user=user).values_list('question', 'correct')
-            sections = Section.objects.values_list('number', flat=True)
-            subsections = Subsection.objects.values_list('number', 'section__number')
-            questions = QuestionModel.objects.values_list('id', 'number', 'subsection__number',
-                                                          'subsection__section__number')
+        else:
+            user_answers = []
+        sections = Section.objects.values_list('number', flat=True)
+        subsections = Subsection.objects.values_list('number', 'section__number')
+        questions = QuestionModel.objects.values_list('id', 'number', 'subsection__number',
+                                                      'subsection__section__number')
 
-            tree = {}
-            for section in sections:
-                tree[section] = {}
-            for subsection in subsections:
-                tree[subsection[1]][subsection[0]] = []
-            for question in questions:
-                tree[question[3]][question[2]].append(question)
+        tree = {}
+        for section in sections:
+            tree[section] = {}
+        for subsection in subsections:
+            tree[subsection[1]][subsection[0]] = []
+        for question in questions:
+            tree[question[3]][question[2]].append(question)
 
-            total_list = []
-            for section in sections:
-                section_list = ([], section)
-                for subsection in tree[section]:
-                    subsection_list = ([], subsection)
-                    for question in tree[section][subsection]:
-                        subsection_list[0].append((getnum(user_answers, question[0], user),
-                                                   '/quiz/%s/%s/%s/' % (section, subsection, question[1])))
-                    section_list[0].append(subsection_list)
-                total_list.append(section_list)
+        total_list = []
+        for section in sections:
+            section_list = ([], section)
+            for subsection in tree[section]:
+                subsection_list = ([], subsection)
+                for question in tree[section][subsection]:
+                    subsection_list[0].append((getnum(user_answers, question[0], user),
+                                               '/quiz/%s/%s/%s/' % (section, subsection, question[1])))
+                section_list[0].append(subsection_list)
+            total_list.append(section_list)
 
-            context['list'] = total_list
+        context['list'] = total_list
 
         return render(request, 'quiz/quiz.html', context)
 
