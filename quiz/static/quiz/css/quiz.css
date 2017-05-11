@@ -70,3 +70,7 @@
 .textcenter {
     text-align: center;
 }
+
+.dropdown.icon {
+    outline: 0 !important;
+}
