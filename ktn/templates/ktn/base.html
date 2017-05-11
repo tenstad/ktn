@@ -50,6 +50,11 @@
         {% endfor %}
       });
     </script>
+    <style>
+      .ajs-message {
+          background-color: {{ "ACCENT_COLOR_CODE"|setting }} !important;
+      }
+    </style>
   {% endif %}
 
   {% include 'ktn/delete.html' %}

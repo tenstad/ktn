@@ -14,7 +14,7 @@ class Quiz(View):
 
         context = {
             'sections': Section.objects.values_list('number', flat=True),
-            'subsections': [a for a in range(1, 6)],
+            'subsections': [a for a in range(1, 7)],
             'questions': [a for a in range(1, 11)],
         }
 
@@ -59,6 +59,10 @@ class Quiz(View):
             section = request.POST['section']
             subsection = request.POST['subsection']
             question = request.POST['question']
+
+            if subsection == '6' and section != '2008':
+                messages.error(request, 'Del 6 finnes bare i eksamen 2008')
+                return HttpResponseRedirect('/quiz/')
 
             if not section:
                 section = Section.objects.first()

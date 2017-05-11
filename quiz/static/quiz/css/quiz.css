@@ -33,6 +33,7 @@
 .selection.dropdown, .field {
     max-width: 100% !important;
     min-width: 0 !important;
+    width: calc(33.33% - 2px);
 }
 
 .field {
@@ -62,7 +63,7 @@
 }
 
 .selectform, .jumptobuttons {
-    max-width: 300px;
+    width: 300px;
     display: inline-block;
     padding: 0 10px;
 }

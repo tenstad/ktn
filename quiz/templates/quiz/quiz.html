@@ -35,12 +35,11 @@
                 <div class="ui selection subject dropdown search scrolling field">
                   <input class="dummy" name="subsection" type="hidden">
                   <i class="dropdown icon"></i>
-                  <div class="default text">Oppgave</div>
+                  <div class="default text">Del</div>
                   <div class="menu">
                     {% for subsection in subsections %}
                       <div class="item">{{ subsection }}</div>
                     {% endfor %}
-                    <div class="item" data-value="6">6 (bare 2008)</div>
                   </div>
                 </div>
               </div>
@@ -48,7 +47,7 @@
                 <div class="ui selection subject dropdown search scrolling field">
                   <input class="dummy" name="question" type="hidden">
                   <i class="dropdown icon"></i>
-                  <div class="default text">Spørsmål</div>
+                  <div class="default text">Nr</div>
                   <div class="menu">
                     {% for question in questions %}
                       <div class="item">{{ question }}</div>
