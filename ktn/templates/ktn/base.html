@@ -31,15 +31,20 @@
   </head>
 
   <body>
-    {% block header %}
-      {% include 'ktn/header.html' %}
-    {% endblock header %}
+    <div class="page-wrap">
+        {% block header %}
+          {% include 'ktn/header.html' %}
+        {% endblock header %}
 
-    {% block content %}
-    {% endblock content %}
+        {% block content %}
+        {% endblock content %}
+    </div>
 
-    {% block footer %}
-    {% endblock footer %}
+    <footer class="site-footer">
+        {% block footer %}
+        {% include 'ktn/ad.html' %}
+        {% endblock footer %}
+    </footer>
   </body>
 
   {% if messages %}
