@@ -1,5 +1,6 @@
 can_answer = true;
-section = 0;
+notes = false;
+comments = false;
 
 $(function () {
     $('.answer').click(function () {
@@ -25,36 +26,32 @@ $(function () {
                             $('.results').append('<i class="ui red remove circle icon"></i>');
                         }
                     }
+                    if ($('.comment.text').length) {
+                        comments = true;
+                        display()
+                    }
                 }
             });
         }
     });
 
     $('.note.toggle').click(function () {
-        if (section != 2) {
-            section = 2;
-        } else {
-            section = 0;
-        }
+        notes = !notes;
         display();
     });
 
     $('.comment.toggle').click(function () {
-        if (section != 1) {
-            section = 1;
-        } else {
-            section = 0;
-        }
+        comments = !comments;
         display();
     });
 
     $('.comment.back.button').click(function () {
-        section = 0;
+        comments = false;
         display();
     });
 
     $('.noteabort').click(function () {
-        section = 0;
+        notes = false;
         display();
         $('form textarea').val(original_note);
     });
@@ -69,17 +66,16 @@ $(function () {
 });
 
 function display() {
-    if (section == 1) {
-        $('.question.actions').css('position', 'absolute').css('visibility', 'hidden');
-        $('.notesection').css('position', 'absolute').css('visibility', 'hidden');
+    if (comments == 1) {
         $('.comment.section').css('position', 'relative').css('visibility', 'visible');
-    } else if (section == 2) {
-        $('.question.actions').css('position', 'absolute').css('visibility', 'hidden');
+    } else {
         $('.comment.section').css('position', 'absolute').css('visibility', 'hidden');
+    }
+    if (notes == 1) {
         $('.notesection').css('position', 'relative').css('visibility', 'visible');
+        $('.question.actions').css('position', 'absolute').css('visibility', 'hidden');
     } else {
         $('.notesection').css('position', 'absolute').css('visibility', 'hidden');
-        $('.comment.section').css('position', 'absolute').css('visibility', 'hidden');
         $('.question.actions').css('position', 'relative').css('visibility', 'visible');
     }
 }
