@@ -1,7 +1,7 @@
-$(function () {
-    can_answer = true;
-    note = false;
+can_answer = true;
+section = 0;
 
+$(function () {
     $('.answer').click(function () {
         if (can_answer) {
             can_answer = false;
@@ -31,29 +31,55 @@ $(function () {
     });
 
     $('.note.toggle').click(function () {
-        note = !note;
-        note_display();
+        if (section != 2) {
+            section = 2;
+        } else {
+            section = 0;
+        }
+        display();
+    });
+
+    $('.comment.toggle').click(function () {
+        if (section != 1) {
+            section = 1;
+        } else {
+            section = 0;
+        }
+        display();
+    });
+
+    $('.comment.back.button').click(function () {
+        section = 0;
+        display();
     });
 
     $('.noteabort').click(function () {
-        note = false;
+        section = 0;
+        display();
         $('form textarea').val(original_note);
-        note_display();
     });
 
     $('.notesave').click(function () {
-        $('form').submit();
+        $('form.note').submit();
     });
 
-    note_display();
+    $('.comment.submit').click(function () {
+        $('form.comment').submit();
+    });
 });
 
-function note_display() {
-    if (note) {
+function display() {
+    if (section == 1) {
         $('.question.actions').css('position', 'absolute').css('visibility', 'hidden');
+        $('.notesection').css('position', 'absolute').css('visibility', 'hidden');
+        $('.comment.section').css('position', 'relative').css('visibility', 'visible');
+    } else if (section == 2) {
+        $('.question.actions').css('position', 'absolute').css('visibility', 'hidden');
+        $('.comment.section').css('position', 'absolute').css('visibility', 'hidden');
         $('.notesection').css('position', 'relative').css('visibility', 'visible');
     } else {
         $('.notesection').css('position', 'absolute').css('visibility', 'hidden');
+        $('.comment.section').css('position', 'absolute').css('visibility', 'hidden');
         $('.question.actions').css('position', 'relative').css('visibility', 'visible');
     }
 }

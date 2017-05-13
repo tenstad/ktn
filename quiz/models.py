@@ -111,3 +111,16 @@ class Note(models.Model):
 
     def lines(self):
         return self.note.split('\n')
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+    timestamp = models.DateTimeField(default=timezone.now)
+    comment = models.CharField(max_length=300)
+
+    class Meta:
+        ordering = ['timestamp']
+
+    def __str__(self):
+        return self.comment

@@ -22,8 +22,8 @@
       </div>
       <p>{{ question.question }}</p>
     </div>
-    <div class="notesection">
-      <form class="ui form" action="" method="post">
+    <div class="notesection" style="visibility: hidden; position: absolute;">
+      <form class="ui form note" action="" method="post">
         {% csrf_token %}
         <div class="field">
           <label>Notat</label>
@@ -34,24 +34,52 @@
       --><div class="divider"></div><button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} noteabort tri button">Avbryt</button><!--
       --><div class="divider"></div><button class="ui {{ 'ACCENT_COLOR_NAME'|setting }} delete openmodal tri button" url="deletenote">Slett</button>
     </div>
-    <div class="question actions">
+
+    <div class="question actions" style="visibility: hidden; position: absolute;">
       <a class="ui button answer">True</a><!--
       --><div class="divider"></div><a class="ui button answer">False</a><!--
       --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} tri button" href="{{ question.previous.url }}">Forrige</a><!--
       --><div class="tri divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} tri button" href="/quiz/random">Tilfeldig</a><!--
       --><div class="divider"></div><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} tri button" href="{{ question.next.url }}">Neste</a>
     </div>
+
+    {% if user.is_authenticated %}
+        <div class="comment section" style="visibility: hidden; position: absolute;">
+        {% if comments %}
+          {% for comment in comments %}
+              <div class="comment item">
+                  <p class="comment header">{{ comment.user.username }}&nbsp;<span class="timesince">{{ comment.timestamp|timesince }}</span></p>
+                  <p class="comment text">{{ comment.comment }}</p>
+              </div>
+          {% endfor %}
+        {% else %}
+            <p>Ingen kommentarer</p>
+        {% endif %}
+          <form class="ui form comment" action="" method="post">
+            {% csrf_token %}
+            <div class="field">
+              <label>Kommentar</label>
+              <textarea class="comment" rows="3" name="comment" maxlength="300"></textarea><div class="comment buttons"><!--
+              --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} comment back button">Tilbake</a><!--
+              --><a class="ui {{ 'ACCENT_COLOR_NAME'|setting }} comment submit button">Send</a></div>
+            </div>
+          </form>
+        </div>
+    {% endif %}
+
     {% if not user.is_authenticated %}
       <div class="loginalert">
         <p class="ui red header"><i class="ui red warning sign icon"></i> Ikke logget inn</p>
       </div>
     {% else %}
       <div class="actionbar">
-        <p class="note toggle" data-tooltip="Personlig notat" data-position="left center"><i class="ui blue sticky note {% if not note %}outline{% endif %} icon"></i></p>
+        <p class="comment toggle" data-tooltip="Kommentarer" data-position="left center"><i class="ui blue comments {% if not comments %}outline {% endif %}icon"></i></p>
+        <p class="note toggle" data-tooltip="Personlig notat" data-position="left center"><i class="ui blue sticky note {% if not note %}outline {% endif %}icon"></i></p>
       </div>
     {% endif %}
   </div>
 
+  <script src="{% static "quiz/js/question.js" %}"></script>
   <script>
       $.ajaxSetup({
           beforeSend: function (xhr, settings) {
@@ -59,6 +87,10 @@
           }
       });
       original_note = `{{ note }}`;
+      {% if show_comments %}
+          section = 1;
+      {% endif %}
+        display();
   </script>
-  <script src="{% static "quiz/js/question.js" %}"></script>
+
 {% endblock content %}

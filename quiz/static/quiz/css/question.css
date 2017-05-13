@@ -52,6 +52,10 @@
     right: 0;
 }
 
+.actionbar p {
+    display: inline-block;
+}
+
 .actionbar *:hover {
     cursor: pointer;
 }
@@ -65,4 +69,60 @@
 
 .notesection form {
     text-align: left;
+}
+
+.comment.section {
+    margin-top: 40px;
+}
+
+.comment.buttons {
+    width: 13%;
+    margin-left: 2%;
+    display: inline-block;
+    padding: 0;
+    vertical-align: bottom;
+}
+
+.comment.button, textarea.comment {
+    display: inline-block;
+}
+
+.comment.button, .back.button {
+    width: 100%;
+    margin: 0 !important;
+}
+
+.back.button {
+    margin-bottom: 5px !important;
+    display: none;
+    visibility: hidden;
+}
+
+textarea.comment {
+    width: 85% !important;
+    min-height: 77px;
+}
+
+.comment.header {
+    font-size: 10px;
+}
+
+.comment.header, .comment.text{
+    margin: 0;
+}
+
+.timesince {
+    font-size: 10px;
+}
+
+.comment.item {
+    margin: 10px 0;
+}
+
+.comment.text {
+    font-size: 12px;
+}
+
+form.comment {
+    margin-top: 30px;
 }

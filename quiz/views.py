@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.views import View
 
-from .models import Section, Subsection, Answer, Question as QuestionModel, Note
+from .models import Section, Subsection, Answer, Question as QuestionModel, Note, Comment
 
 
 class Quiz(View):
@@ -126,8 +126,10 @@ class Question(View):
         question = QuestionModel.get(section_num, subsection_num, question_num)
         context = {
             'question': question,
+            'show_comments': 'c' in request.GET,
         }
         if request.user.is_authenticated:
+            context['comments'] = Comment.objects.filter(question=question)
             answers = Answer.objects.filter(question=question, user=request.user)
             if answers.exists():
                 if answers.filter(correct=True).exists():
@@ -142,6 +144,7 @@ class Question(View):
         return render(request, 'quiz/question.html', context)
 
     def post(self, request, section_num, subsection_num, question_num, *args, **kwargs):
+        show_comments = False
         question = QuestionModel.get(section_num, subsection_num, question_num)
         if 'answer' in request.POST:
             correct = eval(request.POST['answer']) == question.true
@@ -160,8 +163,19 @@ class Question(View):
                 note.save()
             else:
                 return delete(request, section_num, subsection_num, question_num)
+        elif 'comment' in request.POST:
+            show_comments = True
+            if request.POST['comment'] and request.user.is_authenticated:
+                Comment.objects.create(
+                    user=request.user,
+                    comment=request.POST['comment'],
+                    question=question,
+                )
 
-        return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section_num, subsection_num, question_num))
+        if show_comments:
+            return HttpResponseRedirect('/quiz/%s/%s/%s/?c=1' % (section_num, subsection_num, question_num))
+        else:
+            return HttpResponseRedirect('/quiz/%s/%s/%s/' % (section_num, subsection_num, question_num))
 
 
 def delete(request, section_num, subsection_num, question_num):

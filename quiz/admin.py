@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Section, Subsection, Question, Answer, Note
+from .models import Section, Subsection, Question, Answer, Note, Comment
 
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -25,10 +25,15 @@ class NoteAdmin(admin.ModelAdmin):
     list_display = ('user', 'note', 'question')
     search_fields = ('note',)
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'comment', 'question')
+    search_fields = ('comment',)
+
 
 admin.site.register(Answer, AnswerAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Note, NoteAdmin)
+admin.site.register(Comment, CommentAdmin)
 
 admin.site.register(Section)
 admin.site.register(Subsection)
