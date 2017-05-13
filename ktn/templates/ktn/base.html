@@ -32,19 +32,19 @@
 
   <body>
     <div class="page-wrap">
-        {% block header %}
-          {% include 'ktn/header.html' %}
-        {% endblock header %}
+      {% block header %}
+        {% include 'ktn/header.html' %}
+      {% endblock header %}
 
-        {% block content %}
-        {% endblock content %}
+      {% block content %}
+      {% endblock content %}
     </div>
 
-    <footer class="site-footer">
-        {% block footer %}
-        {% include 'ktn/ad.html' %}
-        {% endblock footer %}
-    </footer>
+    <div class="site-footer">
+      {% block footer %}
+          {% include 'ktn/ad.html' %}
+      {% endblock footer %}
+    </div>
   </body>
 
   {% if messages %}
