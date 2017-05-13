@@ -104,7 +104,8 @@ textarea.comment {
 }
 
 .comment.header {
-    font-size: 10px;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 .comment.header, .comment.text{
@@ -113,6 +114,7 @@ textarea.comment {
 
 .timesince {
     font-size: 10px;
+    font-weight: 400;
 }
 
 .comment.item {
