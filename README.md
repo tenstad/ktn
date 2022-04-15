@@ -1,3 +1,3 @@
 # ktn
 
-[Quiz](https://ktn.fun/) for TTM4100 at NTNU
+[Quiz](https://ktn.amund.io/) for TTM4100 at NTNU

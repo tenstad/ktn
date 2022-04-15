@@ -26,7 +26,7 @@ class Section(models.Model):
 
 
 class Subsection(models.Model):
-    section = models.ForeignKey(Section)
+    section = models.ForeignKey(Section, on_delete=models.DO_NOTHING)
     number = models.IntegerField()
 
     class Meta:
@@ -49,7 +49,7 @@ class Subsection(models.Model):
 
 
 class Question(models.Model):
-    subsection = models.ForeignKey(Subsection)
+    subsection = models.ForeignKey(Subsection, on_delete=models.DO_NOTHING)
     number = models.IntegerField()
     question = models.CharField(max_length=300)
     true = models.BooleanField(verbose_name='Answer')
@@ -86,8 +86,8 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    user = models.ForeignKey(User)
-    question = models.ForeignKey(Question)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
     timestamp = models.DateTimeField(default=timezone.now)
     correct = models.BooleanField(verbose_name='Answered correct')
 
@@ -99,8 +99,8 @@ class Answer(models.Model):
 
 
 class Note(models.Model):
-    user = models.ForeignKey(User)
-    question = models.ForeignKey(Question)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
     note = models.CharField(max_length=500)
 
     def __str__(self):
@@ -114,8 +114,8 @@ class Note(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User)
-    question = models.ForeignKey(Question)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
     timestamp = models.DateTimeField(default=timezone.now)
     comment = models.CharField(max_length=300)
 

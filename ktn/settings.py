@@ -11,7 +11,6 @@ try:
 except ImportError as e:
     pass
 
-
 ACCENT_COLOR_NAME = 'blue'
 ACCENT_COLOR_CODE = '#2185d0'
 
@@ -84,7 +83,7 @@ elif DB == 'postgres':
             # The following settings are not used with sqlite3:
             'USER': DATABASE_USER,
             'PASSWORD': DATABASE_PASSWORD,
-            'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'HOST':'', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
             'PORT': '', # Set to empty string for default.
         }
     }
