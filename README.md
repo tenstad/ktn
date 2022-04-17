@@ -1,6 +1,6 @@
 # ktn
 
-[Quiz](https://ktn.amund.io/) for TTM4100 at NTNU
+Quiz for TTM4100 at NTNU: [ktn.amund.io](https://ktn.amund.io/)
 
 `ktn/local_settings.py`
 
