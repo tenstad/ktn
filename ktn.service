@@ -1,0 +1,12 @@
+[Unit]
+Description=ktn
+After=network.target
+
+[Service]
+User=ktn
+Group=www-data
+WorkingDirectory=/path/to/ktn
+ExecStart=/path/to/gunicorn --workers 3 --bind 127.0.0.1:8000 ktn.wsgi --access-logfile=/path/to/access.log --error-logfile=/path/to/error.log
+
+[Install]
+WantedBy=multi-user.target
