@@ -1,10 +1,11 @@
 import os
 
 # Default values
-DB = 'sqlite'
-SECRET_KEY = 'SECRET_KEY'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DB = os.getenv('KTN_DB', 'sqlite')
+DEBUG = os.getenv('KTN_DEBUG', 'true') in ('true', 'True')
+STATIC_ROOT = os.getenv('KTN_STATIC_ROOT', 'static')
+SECRET_KEY = os.getenv('KTN_SECRET_KEY', '***')
+ALLOWED_HOSTS = [os.getenv('KTN_ALLOWED_HOSTS', '*')]
 
 try:
     from .local_settings import *
@@ -78,13 +79,16 @@ if DB == 'sqlite':
 elif DB == 'postgres':
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': DATABASE_NAME, # Or path to database file if using sqlite3.
+            # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            # Or path to database file if using sqlite3.
+            'NAME': DATABASE_NAME,
             # The following settings are not used with sqlite3:
             'USER': DATABASE_USER,
             'PASSWORD': DATABASE_PASSWORD,
-            'HOST':'', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-            'PORT': '', # Set to empty string for default.
+            # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'HOST': '',
+            'PORT': '',  # Set to empty string for default.
         }
     }
 

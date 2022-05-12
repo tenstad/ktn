@@ -18,5 +18,5 @@ DATABASE_PASSWORD = '***'
 
 ```bash
 podman build -t ktn .
-podman run --rm -d -p 8000:8000 -v /var/run/postgresql/.s.PGSQL.5432:/var/run/postgresql/.s.PGSQL.5432 --name ktn ktn
+podman run --rm -d --restart unless-stopped  -p 8000:80 -v /var/run/postgresql/.s.PGSQL.5432:/var/run/postgresql/.s.PGSQL.5432 --name ktn ktn
 ```
